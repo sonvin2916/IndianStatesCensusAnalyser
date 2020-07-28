@@ -27,6 +27,5 @@ public class CensusAnalyser {
                 IndiaCensusCSV censusData = censusCSVIterator.next();
             }
             return numOfEntries;
-
     }
 }
