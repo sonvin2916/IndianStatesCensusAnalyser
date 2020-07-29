@@ -54,9 +54,9 @@ public class CensusAnalyserTest {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
-            censusAnalyser.loadIndiaCensusDataForDelimiter(WRONG_CSV_FILE_DELIMITER );
+            censusAnalyser.loadCSVFileToCheckForDemiliterAndHeader(WRONG_CSV_FILE_DELIMITER );
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_DELIMITER,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CVS_FILE_PROBLEM,e.type);
         }
     }
     @Test
@@ -65,9 +65,9 @@ public class CensusAnalyserTest {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
             ExpectedException exceptionRule = ExpectedException.none();
             exceptionRule.expect(CensusAnalyserException.class);
-            censusAnalyser.loadIndiaCensusDataForHeader(WRONG_CSV_FILE_HEADER );
+            censusAnalyser.loadCSVFileToCheckForDemiliterAndHeader(WRONG_CSV_FILE_HEADER );
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_HEADER,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CVS_FILE_PROBLEM,e.type);
         }
     }
     @Test
@@ -101,20 +101,19 @@ public class CensusAnalyserTest {
     public void givenIndiastateCodeCSVFile_WhenIncorrectDelimiter_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            censusAnalyser.loadIndiaStateCodeFileForDelimiter(WRONG_INDIA_STATE_CODE_FILE_DELIMITER );
+            censusAnalyser.loadCSVFileToCheckForDemiliterAndHeader(WRONG_INDIA_STATE_CODE_FILE_DELIMITER );
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_DELIMITER,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CVS_FILE_PROBLEM,e.type);
         }
     }
     @Test
     public void givenIndiastateCodeCSVFile_WhenIncorrectHeader_ShouldThrowException() {
         try {
             CensusAnalyser censusAnalyser = new CensusAnalyser();
-            censusAnalyser.loadIndiaStateCodeFileForDelimiter(WRONG_INDIA_STATE_CODE_FILE_HEADER );
+            censusAnalyser.loadCSVFileToCheckForDemiliterAndHeader(WRONG_INDIA_STATE_CODE_FILE_HEADER );
         } catch (CensusAnalyserException e) {
-            Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_HEADER,e.type);
+            Assert.assertEquals(CensusAnalyserException.ExceptionType.CVS_FILE_PROBLEM,e.type);
         }
     }
-
 
 }
