@@ -84,4 +84,19 @@ public class CensusAnalyser {
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
         }
     }
+    public boolean loadIndiaStateCodeFileForDelimiter(String csvFilePath) throws  CensusAnalyserException{
+        try{
+            BufferedReader csvReader = new BufferedReader(new FileReader(csvFilePath));
+            String row;
+            while((row =csvReader.readLine())!=null)
+            {
+                if(row.contains(","))
+                    System.out.println("File contains a Delimiter");
+            }
+
+        } catch (IOException e) {
+            throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_DELIMITER);
+        }
+        return true;
+    }
 }
