@@ -5,6 +5,8 @@ package censusanalyser;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -14,9 +16,9 @@ import java.util.stream.StreamSupport;
 
 public class CensusAnalyser {
     public int loadIndiaCensusData(String csvFilePath) throws  CensusAnalyserException {
-        try
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));)
         {
-            Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));
+
             CsvToBeanBuilder<IndiaCensusCSV> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
             csvToBeanBuilder.withType(IndiaCensusCSV.class);
             csvToBeanBuilder.withIgnoreLeadingWhiteSpace(true);
@@ -30,6 +32,25 @@ public class CensusAnalyser {
         {
             throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         }
+        catch (IllegalStateException e)
+        {
+            throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE);
+        }
 
+    }
+    public boolean loadIndiaCensusDataForDelimiter(String csvFilePath) throws  CensusAnalyserException{
+        try{
+            BufferedReader csvReader = new BufferedReader(new FileReader(csvFilePath));
+            String row;
+            while((row =csvReader.readLine())!=null)
+            {
+                if(row.contains(","))
+                    System.out.println("File contains a Delimiter");
+            }
+
+        } catch (IOException e) {
+           throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_DELIMITER);
+        }
+        return true;
     }
 }
