@@ -53,4 +53,19 @@ public class CensusAnalyser {
         }
         return true;
     }
+    public boolean loadIndiaCensusDataForHeader(String csvFilePath) throws  CensusAnalyserException{
+        try{
+            BufferedReader csvReader = new BufferedReader(new FileReader(csvFilePath));
+            String row;
+            while((row =csvReader.readLine())!=null)
+            {
+                if(row.contains("State"))
+                    System.out.println("File contains a Header");
+            }
+
+        } catch (IOException e) {
+            throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_HEADER);
+        }
+        return true;
+    }
 }
