@@ -99,4 +99,21 @@ public class CensusAnalyser {
         }
         return true;
     }
+    public boolean loadIndiaStateCodeFileForHeader(String csvFilePath) throws  CensusAnalyserException{
+        try{
+            BufferedReader csvReader = new BufferedReader(new FileReader(csvFilePath));
+            String row;
+            while((row =csvReader.readLine())!=null)
+            {
+                if(row.contains("Name"))
+                    System.out.println("File contains a correct header");
+            }
+
+        } catch (IOException e) {
+            throw new CensusAnalyserException(e.getMessage(),CensusAnalyserException.ExceptionType.CENSUS_FILE_HEADER);
+        }
+        return true;
+    }
+
+
 }
