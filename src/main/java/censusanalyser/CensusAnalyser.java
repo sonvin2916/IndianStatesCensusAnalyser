@@ -1,10 +1,6 @@
 package censusanalyser;
 
 import com.google.gson.Gson;
-
-import com.CSVBuild.CSVBuilderException;
-import com.CSVBuild.CSVBuilderFactory;
-import com.CSVBuild.ICSVBuilder;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -23,13 +19,13 @@ public class CensusAnalyser {
     List<IndiaCensusCSV> censusCSVList =null;
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-           ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
             censusCSVList = csvBuilder.getCSVFileList(reader, IndiaCensusCSV.class);
             return censusCSVList.size();
         } catch (IOException e) {
             throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
         } catch (CSVBuilderException e) {
-           throw new CensusAnalyserException(e.getMessage(),e.type.name());
+            throw new CensusAnalyserException(e.getMessage(),e.type.name());
         }
     }
 
