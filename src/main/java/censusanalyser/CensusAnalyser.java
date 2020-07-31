@@ -110,6 +110,17 @@ public class CensusAnalyser {
         reversesort(censusCSVList,censusDensityComparator);
         String sortedDensityWiseJson = new Gson().toJson(censusCSVList);
         return sortedDensityWiseJson;
+    }
+    public String getAreaWiseSortedData() throws CensusAnalyserException
+    {
+        if(censusCSVList.size()==0 || censusCSVList==null)
+        {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusCSV> censusAreaComparator = Comparator.comparing(census -> census.areaInSqKm);
+        reversesort(censusCSVList,censusAreaComparator);
+        String sortedAreaWiseJson = new Gson().toJson(censusCSVList);
+        return sortedAreaWiseJson;
 
 
     }
