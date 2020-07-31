@@ -137,5 +137,15 @@ public class CensusAnalyserTest {
        IndiaStateCodeCSV[] stateCodeCSVS = new Gson().fromJson(sortedStateCodeData,IndiaStateCodeCSV[].class);
        Assert.assertEquals("AD",stateCodeCSVS[0].stateCode);
    }
+   @Test
+   public void givenIndiaCensusData_WhenSortedPopulationWise_ShouldReturnSortedResult() throws CensusAnalyserException
+   {
+
+       CensusAnalyser censusAnalyser = new CensusAnalyser();
+       censusAnalyser.loadIndiaCensusData( INDIA_CENSUS_CSV_FILE_PATH);
+       String sortedPopulationData=censusAnalyser.getPopulationWiseSortedData();
+       IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedPopulationData,IndiaCensusCSV[].class);
+       Assert.assertEquals(199812341,censusCSV[censusCSV.length - 1].population);
+   }
 
 }

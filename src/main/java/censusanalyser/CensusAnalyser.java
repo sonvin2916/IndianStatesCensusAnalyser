@@ -3,6 +3,7 @@ package censusanalyser;
 import com.google.gson.Gson;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -87,6 +88,23 @@ public class CensusAnalyser {
         return sortedStateCodeJson;
 
     }
+    public String getPopulationWiseSortedData() throws CensusAnalyserException
+    {
+        if(censusCSVList.size()==0 || censusCSVList==null)
+        {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusCSV> censusPopulationComparator = Comparator.comparing(census -> census.population);
+        reversesort(censusCSVList,censusPopulationComparator);
+        String sortedPopulationJson = new Gson().toJson(censusCSVList);
+        return sortedPopulationJson;
+
+    }
+
+    private <E> void reversesort(List<E> csvList, Comparator<E> comparator) {
+        Collections.sort(csvList,comparator);
+    }
+
     private <E> void sort (List<E> csvList, Comparator<E> comparator)
     {
         Collections.sort(csvList,comparator);
