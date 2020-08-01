@@ -1,10 +1,9 @@
-
 package censusanalyser;
 
 import com.google.gson.Gson;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-//import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -18,10 +17,10 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
     List<IndiaCensusDAO> censusCSVList;
     List<IndiaStateCodeCSV> stateCodeCSV;
-
     public CensusAnalyser() {
         this.censusCSVList = new ArrayList<IndiaCensusDAO>();
     }
+
 
     public int loadIndiaCensusData(String csvFilePath) throws CensusAnalyserException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
@@ -64,6 +63,21 @@ public class CensusAnalyser {
         }
 
     }
+    public int loadUSCensusData(String csvFilePath) throws CensusAnalyserException {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            Iterator<USCensusCSV> csvFileIterator = csvBuilder.getCSVFileIterator(reader, USCensusCSV.class);
+            while (csvFileIterator.hasNext()) {
+                this.censusCSVList.add(new IndiaCensusDAO(csvFileIterator.next()));
+            }
+            return censusCSVList.size();
+        } catch (IOException e) {
+            throw new CensusAnalyserException(e.getMessage(), CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM);
+        } catch (CSVBuilderException e) {
+            throw new CensusAnalyserException(e.getMessage(), e.type.name());
+        }
+    }
+
 
     private <E> int getCount(Iterator<E> iterator) {
         Iterable<E> csvIterable = () -> iterator;
@@ -143,4 +157,3 @@ public class CensusAnalyser {
         }
     }
 }
-
