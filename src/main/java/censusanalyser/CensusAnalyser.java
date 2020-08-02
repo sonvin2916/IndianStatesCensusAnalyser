@@ -164,4 +164,24 @@ public class CensusAnalyser {
         String sortedPopulationJson = new Gson().toJson(censusCSVList);
         return sortedPopulationJson;
     }
+
+    public String getUSPopulationDensityWiseSortedData() throws CensusAnalyserException {
+        if (censusCSVList.size() == 0 || censusCSVList == null) {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusDAO> censusPopulationComparator = Comparator.comparing(census -> census.populationDensity);
+        this.sort(censusPopulationComparator);
+        String sortedPopulationJson = new Gson().toJson(censusCSVList);
+        return sortedPopulationJson;
+    }
+
+    public String getUSTotalAreaWiseSortedData() throws CensusAnalyserException {
+        if (censusCSVList.size() == 0 || censusCSVList == null) {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusDAO> censusPopulationComparator = Comparator.comparing(census -> census.totalArea);
+        this.sort(censusPopulationComparator);
+        String sortedAreaJson = new Gson().toJson(censusCSVList);
+        return sortedAreaJson;
+    }
 }

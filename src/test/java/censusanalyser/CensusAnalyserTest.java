@@ -196,4 +196,32 @@ public class CensusAnalyserTest {
         catch (CensusAnalyserException e){}
 
     }
+    @Test
+    public void givenUSCensusData_WhenSortedPopulationDensityWise_ShouldReturnSortedResult() throws CensusAnalyserException
+    {
+        try
+        {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadUSCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedUSPopulationData = censusAnalyser.getUSPopulationDensityWiseSortedData();
+            USCensusCSV[] censusCSVS = new Gson().fromJson(sortedUSPopulationData,USCensusCSV[].class);
+            Assert.assertEquals(3805.61,censusCSVS[censusCSVS.length-1].populationdensity,10000.0);
+        }
+        catch (CensusAnalyserException e){}
+
+    }
+    @Test
+    public void givenUSCensusData_WhenSortedTotalAreaWise_ShouldReturnSortedResult() throws CensusAnalyserException
+    {
+        try
+        {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadUSCensusData(US_CENSUS_CSV_FILE_PATH);
+            String sortedUSAreaData = censusAnalyser.getUSTotalAreaWiseSortedData();
+            USCensusCSV[] censusCSVS = new Gson().fromJson(sortedUSAreaData,USCensusCSV[].class);
+            Assert.assertEquals(1723338.01,censusCSVS[censusCSVS.length-1].totalarea,10000000.00);
+        }
+        catch (CensusAnalyserException e){}
+
+    }
 }
