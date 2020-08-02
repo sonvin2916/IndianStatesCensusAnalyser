@@ -3,7 +3,6 @@ package censusanalyser;
 import com.google.gson.Gson;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,6 +16,7 @@ import java.util.stream.StreamSupport;
 public class CensusAnalyser {
     List<IndiaCensusDAO> censusCSVList;
     List<IndiaStateCodeCSV> stateCodeCSV;
+
     public CensusAnalyser() {
         this.censusCSVList = new ArrayList<IndiaCensusDAO>();
     }
@@ -104,7 +104,6 @@ public class CensusAnalyser {
         sort(stateCodeCSV, stateCodeCSVComparator);
         String sortedStateCodeJson = new Gson().toJson(stateCodeCSV);
         return sortedStateCodeJson;
-
     }
 
     public String getPopulationWiseSortedData() throws CensusAnalyserException {
@@ -145,7 +144,7 @@ public class CensusAnalyser {
     }
 
     private void sort(Comparator<IndiaCensusDAO> censusComparator) {
-        for (int i = 0; i < censusCSVList.size() - 1; i++) {
+        for (int i = 0; i < censusCSVList.size() -1; i++) {
             for (int j = 0; j < censusCSVList.size() - i - 1; j++) {
                 IndiaCensusDAO census1 = censusCSVList.get(j);
                 IndiaCensusDAO census2 = censusCSVList.get(j + 1);
@@ -155,5 +154,14 @@ public class CensusAnalyser {
                 }
             }
         }
+    }
+    public String getUSPopulationWiseSortedData() throws CensusAnalyserException {
+        if (censusCSVList.size() == 0 || censusCSVList == null) {
+            throw new CensusAnalyserException("NO_CENSUS_DATA", CensusAnalyserException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusDAO> censusPopulationComparator = Comparator.comparing(census -> census.population);
+         this.sort(censusPopulationComparator);
+        String sortedPopulationJson = new Gson().toJson(censusCSVList);
+        return sortedPopulationJson;
     }
 }
