@@ -41,6 +41,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CENSUS_FILE_PROBLEM,e.type);
         }
     }
+
     @Test
     public void givenIndiaCensusCSVFile_WhenCorrect_ButIncorrectType_ShouldThrowException() {
         try {
@@ -52,6 +53,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.UNABLE_TO_PARSE,e.type);
         }
     }
+
     @Test
     public void givenIndiaCensusCSVFile_WhenIncorrectDelimiter_ShouldThrowException() {
         try {
@@ -63,6 +65,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CensusAnalyserException.ExceptionType.CVS_FILE_PROBLEM,e.type);
         }
     }
+
     @Test
     public void givenIndiaCensusCSVFile_WhenIncorrectHeader_ShouldThrowException() {
         try {

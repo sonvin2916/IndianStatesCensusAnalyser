@@ -28,4 +28,9 @@ public class IndiaCensusDAO {
 
 
     }
+
+    public IndiaCensusDAO(IndiaStateCodeCSV stateCodeCSV) {
+        stateCode=stateCodeCSV.stateCode;
+
+    }
 }
