@@ -1,9 +1,11 @@
 package censusanalyser;
 
+import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -32,4 +34,5 @@ public class OpenCSVBuilder <E> implements ICSVBuilder{
             throw new CSVBuilderException(e.getMessage(),CSVBuilderException.ExceptionType.UNABLE_TO_PARSE);
         }
     }
+
 }
